@@ -28,6 +28,9 @@ The goals / steps of this project are the following:
 [image7]: ./examples/placeholder.png "Traffic Sign 4"
 [image8]: ./examples/placeholder.png "Traffic Sign 5"
 
+[img1]: ./result/show_original_data_set_statistics.png "Visualization original trainning data"
+[img2]: ./result/show_augmented_data_set_statistics.png "Visualization trainning data after data augmentation"
+
 ## Rubric Points
 ### Here I will consider the [rubric points](https://review.udacity.com/#!/rubrics/481/view) individually and describe how I addressed each point in my implementation.  
 
@@ -57,23 +60,30 @@ signs data set:
 
 Here is an exploratory visualization of the data set. It is a bar chart showing how the data ...
 
-![alt text][image1]
+![alt text][img1]
+
+
 
 ### Design and Test a Model Architecture
 
 #### 1. Describe how you preprocessed the image data. What techniques were chosen and why did you choose these techniques? Consider including images showing the output of each preprocessing technique. Pre-processing refers to techniques such as converting to grayscale, normalization, etc. (OPTIONAL: As described in the "Stand Out Suggestions" part of the rubric, if you generated additional data for training, describe why you decided to generate additional data, how you generated the data, and provide example images of the additional data. Then describe the characteristics of the augmented training set like number of images in the set, number of images for each class, etc.)
 
-As a first step, I decided to convert the images to grayscale because ...
 
-Here is an example of a traffic sign image before and after grayscaling.
+As a last step, I normalized the image RGB data because it's general method to improve training performance. However, I find out normalize the RGB will not help training performance. It hurt the training performance instead. 
 
-![alt text][image2]
+This is [weird](https://github.com/erickaoshoulin/CarND-LaneLines-P2/blob/master/Traffic_Sign_Classifier_with_image_input_normalization.ipynb) for me. 
+The link's validation accuracy is only 0.799 after 100 EPOCH. I don't know how to explain why it does not help when I normalize RGB data.
+ 
 
-As a last step, I normalized the image data because ...
+To add more data to the the data set, I used random shift technique by using karas preprocessing function. 
+I try to use other techniques, but some of them running so slow. So I use random shift only to generate additional data.
+It is a bar chart showing augmentation data set.
 
-I decided to generate additional data because ... 
+![alt text][img2]
 
-To add more data to the the data set, I used the following techniques because ... 
+We can see the samples are more balanced after data augmentation.
+After my experiment, data augmentation can help training converge faster with same model architecture. Validation accuracy exceed 0.9 on EPOCH 6 with data augmentation, but it takes 23 EPOCHs to exceed 0.9 validation accuracy. 
+
 
 Here is an example of an original image and an augmented image:
 
@@ -89,12 +99,18 @@ My final model consisted of the following layers:
 | Layer         		|     Description	        					| 
 |:---------------------:|:---------------------------------------------:| 
 | Input         		| 32x32x3 RGB image   							| 
-| Convolution 3x3     	| 1x1 stride, same padding, outputs 32x32x64 	|
+| Convolution 5x5     	| 1x1 stride, valid padding, outputs 28x28x32 	|
 | RELU					|												|
-| Max pooling	      	| 2x2 stride,  outputs 16x16x64 				|
-| Convolution 3x3	    | etc.      									|
-| Fully connected		| etc.        									|
-| Softmax				| etc.        									|
+| Max pooling	      	| 2x2 stride,  outputs 14x14x32 				|
+| Convolution 5x5	    | 1x1 stride, valid padding, outputs 10x10x64	|
+| RELU					|												|
+| Max pooling	      	| 2x2 stride,  outputs 5x5x64   				|
+| Fully connected		| 124        									|
+| RELU					|												|
+| Fully connected		| 96        									|
+| RELU					|												|
+| Fully connected		| 43        									|
+| Softmax				|           									|
 |						|												|
 |						|												|
  
