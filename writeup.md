@@ -28,8 +28,10 @@ The goals / steps of this project are the following:
 [image7]: ./examples/placeholder.png "Traffic Sign 4"
 [image8]: ./examples/placeholder.png "Traffic Sign 5"
 
-[img1]: ./result/show_original_data_set_statistics.png "Visualization original trainning data"
-[img2]: ./result/show_augmented_data_set_statistics.png "Visualization trainning data after data augmentation"
+[img1]: ./result/show_original_data_set_statistics.png "Visualization stastistics of original trainning data"
+[img2]: ./result/show_augmented_data_set_statistics.png "Visualization statistics of trainning data after data augmentation"
+[img3]: ./result/4x4_random_shift_samples.png "Visualization 16 random shif augmented data of End of no passing traffic sign"
+
 
 ## Rubric Points
 ### Here I will consider the [rubric points](https://review.udacity.com/#!/rubrics/481/view) individually and describe how I addressed each point in my implementation.  
@@ -39,7 +41,7 @@ The goals / steps of this project are the following:
 
 #### 1. Provide a Writeup / README that includes all the rubric points and how you addressed each one. You can submit your writeup as markdown or pdf. You can use this template as a guide for writing the report. The submission includes the project code.
 
-You're reading it! and here is a link to my [project code](ttps://github.com/erickaoshoulin/CarND-LaneLines-P2/blob/master/Traffic_Sign_Classifier.ipynb)
+You're reading it! and here is a link to my [project code](https://github.com/erickaoshoulin/CarND-LaneLines-P2/blob/master/Traffic_Sign_Classifier.ipynb)
 
 ### Data Set Summary & Exploration
 
@@ -81,15 +83,16 @@ It is a bar chart showing augmentation data set.
 
 ![alt text][img2]
 
-We can see the samples are more balanced after data augmentation.
-After my experiment, data augmentation can help training converge faster with same model architecture. Validation accuracy exceed 0.9 on EPOCH 6 with data augmentation, but it takes 23 EPOCHs to exceed 0.9 validation accuracy. 
-
+We can see the samples stastistics are more balanced after data augmentation.
 
 Here is an example of an original image and an augmented image:
 
-![alt text][image3]
+![alt text][img3]
 
 The difference between the original data set and the augmented data set is the following ... 
+
+After my experiment, data augmentation can help training converge faster with same model architecture. Validation accuracy exceed 0.9 on EPOCH 8 with data augmentation, but it takes [23 EPOCHs](https://github.com/erickaoshoulin/CarND-LaneLines-P2/blob/master/Traffic_Sign_Classifier_no_data_augmentation.ipynb) to exceed 0.9 validation accuracy. 
+
 
 
 #### 2. Describe what your final model architecture looks like including model type, layers, layer sizes, connectivity, etc.) Consider including a diagram and/or table describing the final model.
@@ -119,6 +122,10 @@ My final model consisted of the following layers:
 #### 3. Describe how you trained your model. The discussion can include the type of optimizer, the batch size, number of epochs and any hyperparameters such as learning rate.
 
 To train the model, I used an ....
+EPOCHS = 100
+BATCH_SIZE = 128
+rate = 0.001
+
 
 #### 4. Describe the approach taken for finding a solution and getting the validation set accuracy to be at least 0.93. Include in the discussion the results on the training, validation and test sets and where in the code these were calculated. Your approach may have been an iterative process, in which case, outline the steps you took to get to the final solution and why you chose those steps. Perhaps your solution involved an already well known implementation or architecture. In this case, discuss why you think the architecture is suitable for the current problem.
 
