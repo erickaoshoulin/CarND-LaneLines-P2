@@ -91,7 +91,7 @@ Here is an example of an original image and an augmented image:
 
 The difference between the original data set and the augmented data set is the following ... 
 
-After my experiment, data augmentation can help training converge faster with same model architecture. Validation accuracy exceed 0.9 on EPOCH 8 with data augmentation, but it takes [23 EPOCHs](https://github.com/erickaoshoulin/CarND-LaneLines-P2/blob/master/Traffic_Sign_Classifier_no_data_augmentation.ipynb) to exceed 0.9 validation accuracy. 
+After my experiment, data augmentation can help training converge faster with same model architecture. Validation accuracy exceed 0.9 on EPOCH 10 with data augmentation, but it takes [23 EPOCHs](https://github.com/erickaoshoulin/CarND-LaneLines-P2/blob/master/Traffic_Sign_Classifier_no_data_augmentation.ipynb) to exceed 0.9 validation accuracy. 
 
 
 
@@ -122,7 +122,7 @@ My final model consisted of the following layers:
 #### 3. Describe how you trained your model. The discussion can include the type of optimizer, the batch size, number of epochs and any hyperparameters such as learning rate.
 
 To train the model, I used an ....
-EPOCHS = 100
+EPOCHS = 30
 BATCH_SIZE = 128
 rate = 0.001
 
@@ -130,15 +130,27 @@ rate = 0.001
 #### 4. Describe the approach taken for finding a solution and getting the validation set accuracy to be at least 0.93. Include in the discussion the results on the training, validation and test sets and where in the code these were calculated. Your approach may have been an iterative process, in which case, outline the steps you took to get to the final solution and why you chose those steps. Perhaps your solution involved an already well known implementation or architecture. In this case, discuss why you think the architecture is suitable for the current problem.
 
 My final model results were:
-* training set accuracy of ?
-* validation set accuracy of ? 
-* test set accuracy of ?
+
+* training set accuracy of 0.995
+
+* validation set accuracy of 0.954
+
+* test set accuracy of 0.937
 
 If an iterative approach was chosen:
+
 * What was the first architecture that was tried and why was it chosen?
+
+I just copy paste from lenet from course.
+
 * What were some problems with the initial architecture?
+
+I can't achieve the requirement performance. I finally find the root cause is normalization. I have tried 3x3 convolution and added dropout architecture, but 3x3 conv and drop out does not help a lot.
+
 * How was the architecture adjusted and why was it adjusted? Typical adjustments could include choosing a different model architecture, adding or taking away layers (pooling, dropout, convolution, etc), using an activation function or changing the activation function. One common justification for adjusting an architecture would be due to overfitting or underfitting. A high accuracy on the training set but low accuracy on the validation set indicates over fitting; a low accuracy on both sets indicates under fitting.
+
 * Which parameters were tuned? How were they adjusted and why?
+
 * What are some of the important design choices and why were they chosen? For example, why might a convolution layer work well with this problem? How might a dropout layer help with creating a successful model?
 
 If a well known architecture was chosen:
