@@ -32,6 +32,20 @@ The goals / steps of this project are the following:
 [img2]: ./result/show_augmented_data_set_statistics.png "Visualization statistics of trainning data after data augmentation"
 [img3]: ./result/4x4_random_shift_samples.png "Visualization 16 random shif augmented data of End of no passing traffic sign"
 
+[img4]: ./result/random_German_traffic_sign_0.png "Traffic Sign 1"
+[img5]: ./result/random_German_traffic_sign_1.png "Traffic Sign 2"
+[img6]: ./result/random_German_traffic_sign_2.png "Traffic Sign 3"
+[img7]: ./result/random_German_traffic_sign_3.png "Traffic Sign 4"
+[img8]: ./result/random_German_traffic_sign_4.png "Traffic Sign 5"
+
+
+[img9]: ./result/predicted_traffic_signs_0.png "Predicted Traffic Sign 1"
+[img10]: ./result/predicted_traffic_signs_1.png "Predicted Traffic Sign 2"
+[img11]: ./result/predicted_traffic_signs_2.png "Predicted Traffic Sign 3"
+[img12]: ./result/predicted_traffic_signs_3.png "Predicted Traffic Sign 4"
+[img13]: ./result/predicted_traffic_signs_4.png "Predicted Traffic Sign 5"
+
+
 
 ## Rubric Points
 ### Here I will consider the [rubric points](https://review.udacity.com/#!/rubrics/481/view) individually and describe how I addressed each point in my implementation.  
@@ -145,11 +159,13 @@ I just copy paste from lenet from course.
 
 * What were some problems with the initial architecture?
 
-I can't achieve the requirement performance. I finally find the root cause is normalization. I have tried 3x3 convolution and added dropout architecture, but 3x3 conv and drop out does not help a lot.
+I can't achieve the requirement performance in the beginning. I finally find the root cause of performance degradation is using normalization. I have tried 3x3 convolution and added dropout architecture, but 3x3 conv and drop out does not improve performance a lot.
 
 * How was the architecture adjusted and why was it adjusted? Typical adjustments could include choosing a different model architecture, adding or taking away layers (pooling, dropout, convolution, etc), using an activation function or changing the activation function. One common justification for adjusting an architecture would be due to overfitting or underfitting. A high accuracy on the training set but low accuracy on the validation set indicates over fitting; a low accuracy on both sets indicates under fitting.
 
 * Which parameters were tuned? How were they adjusted and why?
+
+I encountered underfitting when I was applying normalization. After removing normalization, I try to increase number of features on each layers. I have also tried dropout layer and 3x3 convlution, but the improvement is not critical. 
 
 * What are some of the important design choices and why were they chosen? For example, why might a convolution layer work well with this problem? How might a dropout layer help with creating a successful model?
 
@@ -157,7 +173,8 @@ If a well known architecture was chosen:
 * What architecture was chosen?
 * Why did you believe it would be relevant to the traffic sign application?
 * How does the final model's accuracy on the training, validation and test set provide evidence that the model is working well?
- 
+
+I just modified the neural net from LeNet. The convolution layer is important because traffic sign problem does not sensitive to color. What more important is the picture's structure. So the the convolution layer is important. Dropout layer can help prevent overfitting, but my experement shows that without dropout layer the neural net may be trained without overfitting. 
 
 ### Test a Model on New Images
 
@@ -165,39 +182,34 @@ If a well known architecture was chosen:
 
 Here are five German traffic signs that I found on the web:
 
-![alt text][image4] ![alt text][image5] ![alt text][image6] 
-![alt text][image7] ![alt text][image8]
+![alt text][img4] ![alt text][img5] ![alt text][img6] 
+![alt text][img7] ![alt text][img8]
 
-The first image might be difficult to classify because ...
+The first image might be difficult to classify because the left side of the image is too dark. The image structure may be destroyed.
 
 #### 2. Discuss the model's predictions on these new traffic signs and compare the results to predicting on the test set. At a minimum, discuss what the predictions were, the accuracy on these new predictions, and compare the accuracy to the accuracy on the test set (OPTIONAL: Discuss the results in more detail as described in the "Stand Out Suggestions" part of the rubric).
 
 Here are the results of the prediction:
 
-| Image			        |     Prediction	        					| 
-|:---------------------:|:---------------------------------------------:| 
-| Stop Sign      		| Stop sign   									| 
-| U-turn     			| U-turn 										|
-| Yield					| Yield											|
-| 100 km/h	      		| Bumpy Road					 				|
-| Slippery Road			| Slippery Road      							|
+![alt text][img9] ![alt text][img10] ![alt text][img11] 
+![alt text][img12] ![alt text][img13]
 
 
-The model was able to correctly guess 4 of the 5 traffic signs, which gives an accuracy of 80%. This compares favorably to the accuracy on the test set of ...
+The model was able to correctly guess 5 of the 5 traffic signs, which gives an accuracy of 100%. This compares favorably to the accuracy on the test set of 0.937.
 
 #### 3. Describe how certain the model is when predicting on each of the five new images by looking at the softmax probabilities for each prediction. Provide the top 5 softmax probabilities for each image along with the sign type of each probability. (OPTIONAL: as described in the "Stand Out Suggestions" part of the rubric, visualizations can also be provided such as bar charts)
 
 The code for making predictions on my final model is located in the 11th cell of the Ipython notebook.
 
-For the first image, the model is relatively sure that this is a stop sign (probability of 0.6), and the image does contain a stop sign. The top five soft max probabilities were
+For the first image, the model is relatively sure that this is a "No passing for vehicles over 3.5 metric tons" sign (probability of 1), and the image does contain predicted sign. The top five soft max probabilities were
 
-| Probability         	|     Prediction	        					| 
-|:---------------------:|:---------------------------------------------:| 
-| .60         			| Stop sign   									| 
-| .20     				| U-turn 										|
-| .05					| Yield											|
-| .04	      			| Bumpy Road					 				|
-| .01				    | Slippery Road      							|
+| Probability           	|     Prediction	        					| 
+|:-------------------------:|:---------------------------------------------:| 
+| almost 1.0   		    	| No passing for vehicles over 3.5 metric tons  | 
+| 1.67795329e-14	    	| Speed limit (80km/h) 							|
+| 2.11796597e-18	    	| Wild animals crossing							|
+| 3.13863861e-19		    | Speed limit (50km/h)			 				|
+| 5.64784422e-22	        | Speed limit (30km/h)     						|
 
 
 For the second image ... 
